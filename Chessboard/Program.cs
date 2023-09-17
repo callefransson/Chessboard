@@ -1,4 +1,4 @@
-﻿// Carl Fransson Systemutvecklare .NET med AI kompetens
+﻿// Carl Fransson .NET23
 
 // The variables i use for the project
 int number;
@@ -42,7 +42,7 @@ for (int i = 1;i < number; i++) // We create a for loop. Where index starts at 1
 }
 
 Console.WriteLine("Din pjäs ligger på rad {0} och på kolumn {1}", row,column);
-Console.WriteLine("Klicka på valfri knapp för att stänga programmet...");
+Console.WriteLine("Klicka på valfri knapp för att stänga programmet.");
 Console.ReadKey();
 
 
