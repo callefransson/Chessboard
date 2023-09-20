@@ -1,50 +1,79 @@
 ﻿// Carl Fransson .NET23
 
-// The variables i use for the project
-int number;
-string firstLetter;
-string secondLetter;
-int row;
-int column;
+using System.Data.Common;
 
-Console.WriteLine("Hur många nummer vill du ha i ditt schackbräde?");
-number = Convert.ToInt32(Console.ReadLine()); // Because we want to store a number insted of a text we have to convert from string to int and then save users input in variable number
-Console.WriteLine("Vilken bokstav ska den första rutan ha?");
-firstLetter = Console.ReadLine();
-Console.WriteLine("Vilken bokstav ska den andra rutan ha?");
-secondLetter = Console.ReadLine();
-Console.WriteLine("Vilken bokstav vill du att din pjäs ska ha?");
-char chessSymbol = Console.ReadLine()[0]; // I use char here because we want to implement a single letter and we use [0] to access the first character of the input string. 
-Console.WriteLine("I vilken rad vill du placera din pjäs? (i siffror)");
-row= Convert.ToInt32(Console.ReadLine()); // Same here we convert from string to int and store it in variable row
-Console.WriteLine("I vilken column vill du placera din pjäs? (i siffror)");
-column = Convert.ToInt32(Console.ReadLine()); // We convert from string to int and store it in variable column
-
-char[,] array = new char[number, number]; // We create a two dimensional array of characters. So we can get acsess to row and column.
-
-for (int i = 1;i < number; i++) // We create a for loop. Where index starts at 1 and keeps looping until we reach the number specified in the variable "number"
+internal class Program
 {
-    for(int j = 1; j < number; j++) // We create an inner loop so we can alternate the first letter and second letter. It keeps looping until it reaches the amount of numbers the user choosed in the beginning
+    private static void Main(string[] args)
     {
-        array[i, j] = (i + j) % 2 == 0 ? firstLetter[0] : secondLetter[0]; // To get the the letters to alternate we use this calculation.
+        int number;
+        int row;
+        int column;
+        Console.WriteLine("Hur många nummer vill du ha i ditt schackbräde?");
+        while (true) // Loopen fortsätter köras så länge användaren inte skriver in ett heltal
+        {
+            string convertNumber = Console.ReadLine(); // Lagrar användarens input i variabeln convertNumber
+            if (int.TryParse(convertNumber, out number)) //Skapar en if sats och använder oss utav TryParse för att se om användaren skriver in ett heltal och lagrar de i variabeln number
+            {
+                break; // Loopen avslutas när användaren skriver ett heltal
+            }
+            else // Om användaren skriver något annat än ett heltal
+            {
+                Console.WriteLine("Vänligen skriv in ett heltal");
+            }
+        }
+            Console.WriteLine("Vilken bokstav ska den första rutan ha?");
+            string firstLetter = Console.ReadLine(); // Lagrar användarens input i variabeln firstLetter
+            Console.WriteLine("Vilken bokstav ska den andra rutan ha?");
+           string secondLetter = Console.ReadLine(); // Lagrar användarens input i variabeln secondLetter
+        Console.WriteLine("Vilken bokstav vill du att din pjäs ska ha?");
+            char chessSymbol = Console.ReadLine()[0]; //Använder char eftersom vi vill implementera en bokstav och vi använder [0] för att komma åt det första tecknet i inmatningssträngen. 
+        Console.WriteLine("I vilken rad vill du placera din pjäs? (i siffror)");
 
-        if (row >= 0 && row < number && column >= 0 && column < number) // If row is greater then or equal to 0 and row is less then the amount of numbers user declared and same for column 
+        while (true)
         {
-            array[row, column] = chessSymbol; // We replace that letter in the chessboard to the letter the user wanted as chessSymbol
+            string convertRow = Console.ReadLine();
+            if (int.TryParse(convertRow, out row) && row > 0 && row < number) // Kollar så användaren skriver in ett heltal och om den är inanför schackbrädets storlek
+            {
+                break;
+            }
+            else
+            {
+                Console.WriteLine("Vänligen skriv in ett heltal inom intervallet 1 till {0}.",number -1); // Om användaren skriver ett för stort tal skrivs denna text ut
+            }
         }
-        else // If user picks a greater number then the amount of numbers he choosed in the beginning the text inside "" will show
+            Console.WriteLine("I vilken column vill du placera din pjäs? (i siffror)");
+        while (true)
         {
-            Console.WriteLine("Ogiltig kolumn eller rad");
-        }
-        Console.Write(array[i,j]); // Prints out the new chessSymbol
+            string convertColumn = Console.ReadLine();
+            if(int.TryParse(convertColumn, out column) && column > 0 && column < number)
+            {
+                break;
+            }
+            else
+            {
+                Console.WriteLine("Vänligen skriv in ett heltal inom intervallet 1 till {0}.", number -1);
+            }
+        }         
+            char[,] array = new char[number, number]; //Vi skapar en tvådimensionell array av tecken char. Så vi kan få tillgång till rad och kolumn.
+            for (int i = 1; i < number; i++) // Vi skapar en for-loop. Där index börjar på 1 och fortsätter att loopa tills vi når det nummer som anges i variabeln "number"
+            {
+                for (int j = 1; j < number; j++) // Vi skapar en inre loop så att vi kan varva första bokstaven och andra bokstaven. Den fortsätter att loopa tills den når det antal nummer som användaren valde i början
+                {
+                    array[i, j] = (i + j) % 2 == 0 ? firstLetter[0] : secondLetter[0]; // För att få bokstäverna att alternera
+                }
+            }
+           array[row, column] = chessSymbol; // Vi ersätter den bokstaven i schackbrädet till den bokstav som användaren ville ha som schacksymbol
+            for (int i = 0; i < number; i++) // Loopar igenom för att kunna skriva ut och placera ut den nya schacksymbolen
+            {
+                for (int j = 0; j < number; j++)
+                {
+                    Console.Write(array[i, j]);
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine("Din pjäs ligger på rad {0} och på kolumn {1}", row, column); // Skriver ut vart i schackspelet sin pjäs står på
+            Console.WriteLine("Klicka på valfri knapp för att stänga programmet.");
+            Console.ReadKey();
     }
-    Console.WriteLine(); // So we get as many lines as the number in variable number
 }
-
-Console.WriteLine("Din pjäs ligger på rad {0} och på kolumn {1}", row,column);
-Console.WriteLine("Klicka på valfri knapp för att stänga programmet.");
-Console.ReadKey();
-
-
-
-
