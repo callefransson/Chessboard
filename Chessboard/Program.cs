@@ -32,8 +32,8 @@ internal class Program
 
         while (true)
         {
-            string convertRow = Console.ReadLine();
-            if (int.TryParse(convertRow, out row) && row > 0 && row < number) // Kollar så användaren skriver in ett heltal och om den är inanför schackbrädets storlek
+            string chooseRow = Console.ReadLine();
+            if (int.TryParse(chooseRow, out row) && row > 0 && row < number) // Kollar så användaren skriver in ett heltal och om den är inanför schackbrädets storlek
             {
                 break;
             }
@@ -45,8 +45,8 @@ internal class Program
             Console.WriteLine("I vilken column vill du placera din pjäs? (i siffror)");
         while (true)
         {
-            string convertColumn = Console.ReadLine();
-            if(int.TryParse(convertColumn, out column) && column > 0 && column < number)
+            string chooseColumn = Console.ReadLine();
+            if(int.TryParse(chooseColumn, out column) && column > 0 && column < number)
             {
                 break;
             }
@@ -55,8 +55,8 @@ internal class Program
                 Console.WriteLine("Vänligen skriv in ett heltal inom intervallet 1 till {0}.", number -1);
             }
         }         
-            char[,] array = new char[number, number]; //Vi skapar en tvådimensionell array av tecken char. Så vi kan få tillgång till rad och kolumn.
-            for (int i = 1; i < number; i++) // Vi skapar en for-loop. Där index börjar på 1 och fortsätter att loopa tills vi når det nummer som anges i variabeln "number"
+            char[,] array = new char[number, number]; //Skapar en tvådimensionell array av tecken char. Så vi kan få tillgång till rad och kolumn.
+            for (int i = 1; i < number; i++) // Skapar en for-loop. Där index börjar på 1 och fortsätter att loopa tills vi når det nummer som anges i variabeln "number"
             {
                 for (int j = 1; j < number; j++) // Vi skapar en inre loop så att vi kan varva första bokstaven och andra bokstaven. Den fortsätter att loopa tills den når det antal nummer som användaren valde i början
                 {
